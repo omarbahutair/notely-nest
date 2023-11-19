@@ -10,3 +10,6 @@ Content-Type: application/json
 
 ### Get current user
 GET http://localhost:5000/auth/whoami
+
+### Signs out
+POST http://localhost:5000/auth/signout

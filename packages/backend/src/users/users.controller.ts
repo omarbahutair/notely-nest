@@ -24,4 +24,9 @@ export class UsersController {
   whoami(@CurrentUser() user: User): User {
     return user;
   }
+
+  @Post('signout')
+  signout(@Session() session: any): void {
+    session.userId = null;
+  }
 }
