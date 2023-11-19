@@ -2,6 +2,7 @@ import {
   Module,
   ValidationPipe,
   type MiddlewareConsumer,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -30,6 +31,19 @@ import { UsersModule } from './users/users.module';
       provide: APP_PIPE,
       useValue: new ValidationPipe({
         whitelist: true,
+        exceptionFactory: (errors) => {
+          return new UnprocessableEntityException({
+            statusCode: 422,
+            error: 'Unprocessable Entity',
+            message: errors.reduce(
+              (acc, e) => ({
+                ...acc,
+                [e.property]: Object.values(e.constraints),
+              }),
+              {}
+            ),
+          });
+        },
       }),
     },
   ],

@@ -3,9 +3,7 @@ Content-Type: application/json
 
 {
   "email": "new@email.com",
-  "password": "ABCZabcz1234#",
-  "firstName": "new",
-  "lastName": "user"
+  "password": "ABCZabcz1234#"
 }
 
 ### Get current user
