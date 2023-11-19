@@ -1,0 +1,12 @@
+POST http://localhost:5000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "new@email.com",
+  "password": "ABCZabcz1234#",
+  "firstName": "new",
+  "lastName": "user"
+}
+
+### Get current user
+GET http://localhost:5000/auth/whoami

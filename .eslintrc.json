@@ -14,5 +14,9 @@
     "sourceType": "module"
   },
   "plugins": ["react"],
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/prefer-nullish-coalescing": 0,
+    "@typescript-eslint/strict-boolean-expressions": 0,
+    "@typescript-eslint/promise-function-async": 0
+  }
 }
