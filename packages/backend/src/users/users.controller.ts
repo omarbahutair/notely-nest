@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { User, type UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { SigninUserDto } from './dtos/signin-user.dto';
 
 @Controller('auth')
 export class UsersController {
@@ -28,5 +29,17 @@ export class UsersController {
   @Post('signout')
   signout(@Session() session: any): void {
     session.userId = null;
+  }
+
+  @Post('signin')
+  async signin(
+    @Body() body: SigninUserDto,
+    @Session() session
+  ): Promise<UserDocument> {
+    const user = await this.authService.signin(body);
+
+    session.userId = user._id;
+
+    return user;
   }
 }

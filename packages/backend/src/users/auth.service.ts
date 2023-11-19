@@ -4,6 +4,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { type CreateUserDto } from './dtos/create-user.dto';
 import { type UserDocument } from './schemas/user.schema';
+import { type SigninUserDto } from './dtos/signin-user.dto';
 
 const scrypt = promisify(_scrypt);
 
@@ -23,6 +24,25 @@ export class AuthService {
     document.password = `${salt}.${hash.toString('hex')}`;
 
     const user = await this.usersService.create(document);
+
+    return user;
+  }
+
+  async signin(credentials: SigninUserDto): Promise<UserDocument> {
+    const user = await this.usersService.findOne({ email: credentials.email });
+
+    if (!user) throw new BadRequestException('Incorrect credentials');
+
+    const [salt, hash] = user.password.split('.');
+
+    const hashedCredential = (await scrypt(
+      credentials.password,
+      salt,
+      32
+    )) as Buffer;
+
+    if (hash !== hashedCredential.toString('hex'))
+      throw new BadRequestException('Incorrect credentials');
 
     return user;
   }

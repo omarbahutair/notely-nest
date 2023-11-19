@@ -13,3 +13,12 @@ GET http://localhost:5000/auth/whoami
 
 ### Signs out
 POST http://localhost:5000/auth/signout
+
+### Sign In
+POST http://localhost:5000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "new@email.com",
+  "password": "ABCZabcz1234#"
+}

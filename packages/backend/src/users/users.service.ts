@@ -20,4 +20,8 @@ export class UsersService {
   findById(id: string): Promise<UserDocument> {
     return this.userModel.findById(id);
   }
+
+  findOne(filter: FilterQuery<UserDocument>): Promise<UserDocument> {
+    return this.userModel.findOne(filter);
+  }
 }
